@@ -62,7 +62,7 @@ def limpiarURL(url):
             url = url.replace(laParte, "?")
     return url
 
-
+    #VALIDACION DE TOKEN
 def validarPermiso(endPoint, metodo, idRol):
     url = dataConfig["url-backend-seguridad"] + "/permisos-roles/validar-permiso/rol/" + str(idRol)
     tienePermiso = False
@@ -275,6 +275,36 @@ def asignarPartidoACandidato(id, id_partido):
     headers = {"Content-Type": "application/json; charset=utf-8"}
     url = dataConfig["url-backend-registraduria"] + '/candidatos/' + id + '/partidos/' + id_partido
     response = requests.put(url, headers=headers, json=data)
+    json = response.json()
+    return jsonify(json)
+
+
+    #QUERY
+
+    # mostrar informacion de votacion por id de candidato
+@app.route("/resultados/candidatos/<string:id_candidato>", methods=['GET'])
+def resultadosCandidatos(id_candidato):
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-registraduria"] + '/resultados/candidatos' + id_candidato
+    response = requests.get(url, headers=headers)
+    json = response.json()
+    return jsonify(json)
+
+    #candidato mas votado por mesa
+@app.route("/resultados/votaciones_mayores", methods=['GET'])
+def getVotacionMayor():
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-registraduria"] + '/resultados/votaciones_mayores'
+    response = requests.get(url, headers=headers)
+    json = response.json()
+    return jsonify(json)
+
+    #suma de votos por candidato
+@app.route("/resultados/suma_votos/candidatos/<string:id_candidato>", methods=['GET'])
+def getSumaVotosCandidato(id_candidato):
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    url = dataConfig["url-backend-registraduria"] + '/resultados/suma_votos/candidatos/' + id_candidato
+    response = requests.get(url, headers=headers)
     json = response.json()
     return jsonify(json)
 
