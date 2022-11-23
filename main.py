@@ -285,7 +285,7 @@ def asignarPartidoACandidato(id, id_partido):
 @app.route("/resultados/candidatos/<string:id_candidato>", methods=['GET'])
 def resultadosCandidatos(id_candidato):
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-registraduria"] + '/resultados/candidatos' + id_candidato
+    url = dataConfig["url-backend-registraduria"] + '/resultados/candidatos/' + id_candidato
     response = requests.get(url, headers=headers)
     json = response.json()
     return jsonify(json)
